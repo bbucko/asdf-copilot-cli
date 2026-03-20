@@ -3,7 +3,7 @@
 # set -euo pipefail
 
 GH_REPO="https://github.com/github/copilot-cli"
-TOOL_NAME="copilot"
+TOOL_NAME="copilot-cli"
 TOOL_TEST="copilot --version"
 
 fail() {
@@ -71,11 +71,11 @@ install_version() {
 	(
 		echo "* Installing $TOOL_NAME $version from $ASDF_DOWNLOAD_PATH to $3..."
 
-		mkdir -p "$install_path/bin"
-		cp -r "$ASDF_DOWNLOAD_PATH"/copilot "$install_path"
+		mkdir -p "$install_path"
+		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
 		local tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		test -x "$install_path/bin/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
+		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (
