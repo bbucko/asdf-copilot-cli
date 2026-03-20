@@ -10,28 +10,10 @@ source "${plugin_dir}/lib/utils.bash"
 
 mkdir -p "$ASDF_DOWNLOAD_PATH"
 
-uname_s="$(uname -s)"
-uname_m="$(uname -m)"
-os=""
-
-case "$uname_s" in
-Darwin) os="darwin" ;;
-Linux) os="linux" ;;
-*) fail "OS not supported: $uname_s" ;;
-esac
-
-case "$uname_m" in
-aarch64 | arm64) arch="arm64" ;;
-x86_64) arch="x64" ;;
-*) fail "Architecture not supported: $uname_m" ;;
-esac
-
-os="${os}-${arch}"
-
-release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$os-$ASDF_INSTALL_VERSION.tar.gz"
+release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$ASDF_INSTALL_VERSION.tar.gz"
 
 # Download tar.gz file to the download directory
-download_release "$ASDF_INSTALL_VERSION" "$release_file" "$os"
+download_release "$ASDF_INSTALL_VERSION" "$release_file"
 
 #  Extract contents of tar.gz file into the download directory
 echo "* Extracting $release_file to $ASDF_DOWNLOAD_PATH"

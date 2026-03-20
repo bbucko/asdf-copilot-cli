@@ -34,35 +34,48 @@ list_all_versions() {
 }
 
 download_release() {
-	local version filename url
-	version="$1"
-	filename="$2"
-	os="$3"
+	local version="$1"
+	local filename="$2"
 
-	url="$GH_REPO/releases/download/v${version}/copilot-${os}.tar.gz"
+	local uname_s="$(uname -s)"
+	local uname_m="$(uname -m)"
+	local os=""
 
-	echo "* Downloading $TOOL_NAME release $version..."
+	case "$uname_s" in
+	Darwin) os="darwin" ;;
+	Linux) os="linux" ;;
+	*) fail "OS not supported: $uname_s" ;;
+	esac
+
+	case "$uname_m" in
+	aarch64 | arm64) arch="arm64" ;;
+	x86_64) arch="x64" ;;
+	*) fail "Architecture not supported: $uname_m" ;;
+	esac
+
+	local url="$GH_REPO/releases/download/v${version}/copilot-${os}-${arch}.tar.gz"
+
+	echo "* Downloading $TOOL_NAME release $version to $filename..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
 
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3%/bin}"
+	local install_path="$3/bin"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
 	fi
 
 	(
-		echo "* Installing $TOOL_NAME $version to $install_path..."
+		echo "* Installing $TOOL_NAME $version from $ASDF_DOWNLOAD_PATH to $3..."
 
-		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+		mkdir -p "$install_path/bin"
+		cp -r "$ASDF_DOWNLOAD_PATH"/copilot "$install_path/bin"
 
-		local tool_cmd
-		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
+		local tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
+		test -x "$install_path/bin/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (
