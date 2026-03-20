@@ -1,13 +1,15 @@
 <div align="center">
 
-# asdf-copilot [![Build](https://github.com/bbucko/asdf-copilot/actions/workflows/build.yml/badge.svg)](https://github.com/bbucko/asdf-copilot/actions/workflows/build.yml) [![Lint](https://github.com/bbucko/asdf-copilot/actions/workflows/lint.yml/badge.svg)](https://github.com/bbucko/asdf-copilot/actions/workflows/lint.yml)
+# asdf-copilot-cli [![Build](https://github.com/bbucko/asdf-copilot-cli/actions/workflows/build.yml/badge.svg)](https://github.com/bbucko/asdf-copilot-cli/actions/workflows/build.yml) [![Lint](https://github.com/bbucko/asdf-copilot-cli/actions/workflows/lint.yml/badge.svg)](https://github.com/bbucko/asdf-copilot-cli/actions/workflows/lint.yml)
 
-[copilot](https://github.com/bbucko/copilot) plugin for the [asdf version manager](https://asdf-vm.com).
+[copilot-cli](https://github.com/github/copilot-cli) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
 # Contents
 
+- [asdf-copilot-cli  ](#asdf-copilot-cli--)
+- [Contents](#contents)
 - [Dependencies](#dependencies)
 - [Install](#install)
 - [Contributing](#contributing)
@@ -25,9 +27,11 @@
 Plugin:
 
 ```shell
-asdf plugin add copilot
+asdf plugin add copilot-cli
+asdf plugin add copilot-cli
 # or
-asdf plugin add copilot https://github.com/bbucko/asdf-copilot.git
+asdf plugin add copilot-cli https://github.com/bbucko/asdf-copilot-cli.git
+asdf plugin add copilot-cli https://github.com/bbucko/asdf-copilot-cli.git
 ```
 
 copilot:
